@@ -1,4 +1,4 @@
-# resilientdb-javascript-sdk
+# resilientdb-typescript-sdk
 
 **Authors:** Christopher Chen, Jamie Hsi, Samuel Li, Shrey Gupta, Tyler Beer
 
@@ -45,7 +45,7 @@ npm run dev
 Then open in your browser the dev sever that starts
 
 ## How to clone repository
-`git clone https://github.com/samuelili/resilientdb-javascript-sdk.git`
+`git clone https://github.com/samuelili/resilientdb-typescript-sdk.git`
 
 ## How to push a new version of the npm package
 
