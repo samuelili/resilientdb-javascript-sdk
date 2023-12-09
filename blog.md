@@ -98,7 +98,6 @@ Here's a detailed look at each method provided by the `ResilientDB` client.
 Included within the SDK repository is a demo React application that showcases the SDK's capabilities. The app allows users to filter transactions, post new transactions, and explore the core features of the ResilientDB TypeScript SDK.
 
 ## Use the SDK in 5 easy steps
-## Step-by-Step Guide
 
 ### Step 1: Setting Up the Project
 
