@@ -2,7 +2,7 @@
 
 The digital era demands robust solutions that can handle data with precision, security, and flexibility. Blockchain technology is championing this revolution, and at the heart of many innovative applications is ResilientDB, a versatile distributed ledger that offers both trust and transparency.
 
-In this depth look, we will explore the ResilientDB TypeScript SDK, an essential toolkit for developers seeking to leverage the ResilientDB platform in their JavaScript and TypeScript applications. Through the integration of GraphQL, the SDK simplifies interactions with the ResilientDB server, enabling easy queries and mutations to manage transactions effectively.
+In this in-depth look, we will explore the ResilientDB TypeScript SDK, an essential toolkit for developers seeking to leverage the ResilientDB platform in their JavaScript and TypeScript applications. Through the integration of GraphQL, the SDK simplifies interactions with the ResilientDB server, enabling easy queries and mutations to manage transactions effectively.
 
 ## Table of Contents
 - [**What Is ResilientDB?**](#what-is-resilientdb)
