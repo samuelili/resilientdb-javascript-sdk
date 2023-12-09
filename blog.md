@@ -97,25 +97,26 @@ Here's a detailed look at each method provided by the `ResilientDB` client.
 
 Included within the SDK repository is a demo React application that showcases the SDK's capabilities. The app allows users to filter transactions, post new transactions, and explore the core features of the ResilientDB TypeScript SDK.
 
-## Use the SDK in 5 easy steps
+## Use the SDK in 6 easy steps
 
-### Step 1: Setting Up the Project
+## Step 1: Project Setup and SDK Installation
 
-First, let's create a new TypeScript project and install the required dependencies.
+Set up a new TypeScript project and install the `resilientdb-javascript-sdk` package as well as TypeScript and the necessary types for Node.js.
 
 ```sh
-mkdir resilientdb-example
-cd resilientdb-example
+mkdir resilientdb-ts-example
+cd resilientdb-ts-example
 npm init -y
-npm install resilientdb-javascript-sdk typescript ts-node @types/node --save-dev
+npm install resilientdb-javascript-sdk
+npm install typescript ts-node @types/node --save-dev
 ```
 
-Create a `tsconfig.json` file for TypeScript configuration:
+Create `tsconfig.json`:
 
 ```json
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2018",
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true
@@ -123,83 +124,108 @@ Create a `tsconfig.json` file for TypeScript configuration:
 }
 ```
 
-### Step 2: Generating Keys
+## Step 2: Generating Keys
 
-Create a new file named `index.ts` and import the `ResilientDB` class from the SDK. Then, use the static method `generateKeys` to create a new set of keys.
+In the `index.ts` file:
 
 ```typescript
 import { ResilientDB } from 'resilientdb-javascript-sdk';
 
-// Generate a new set of keys
-const keys = ResilientDB.generateKeys();
-console.log('Public Key:', keys.publicKey);
-console.log('Private Key:', keys.privateKey);
+// Generate public and private keys
+const { publicKey, privateKey } = ResilientDB.generateKeys();
+
+console.log(`Public Key: ${publicKey}`);
+console.log(`Private Key: ${privateKey}`);
 ```
 
-### Step 3: Initializing the Client
+## Step 3: Initializing the Client
 
-Next, initialize the `ResilientDB` client using either `FetchClient` or `AxiosClient`. In this example, we'll use `FetchClient`.
+Continue editing the `index.ts` to initialize the client:
 
 ```typescript
-import { FetchClient } from 'resilientdb-javascript-sdk';
+import { ResilientDB, FetchClient } from 'resilientdb-javascript-sdk';
 
-// Initialize the ResilientDB client
-const dbClient = new ResilientDB("https://cloud.resilientdb.com", new FetchClient());
+// Initialize the client
+const resilientDBClient = new ResilientDB("https://cloud.resilientdb.com", new FetchClient());
 ```
 
-### Step 4: Fetching Transactions
+## Step 4: Fetching and Filtering Transactions
 
-Now that we have a client, we can fetch transactions from the ledger.
+Add functions to fetch all transactions and filter based on certain criteria.
 
 ```typescript
 // Fetch all transactions
-async function fetchTransactions() {
-  try {
-    const transactions = await dbClient.getAllTransactions();
-    console.log('Transactions:', transactions);
-  } catch (error) {
-    console.error('Error fetching transactions:', error);
-  }
+async function getAllTransactions() {
+  const transactions = await resilientDBClient.getAllTransactions();
+  console.log('All Transactions:', transactions);
 }
 
-fetchTransactions();
+// Fetch transactions with filters
+async function getFilteredTransactions() {
+  const filter = {
+    ownerPublicKey: publicKey,
+    // recipientPublicKey can also be specified here.
+  };
+  const transactions = await resilientDBClient.getFilteredTransactions(filter);
+  console.log('Filtered Transactions:', transactions);
+}
+
+getAllTransactions();
+getFilteredTransactions();
 ```
 
-### Step 5: Posting a Transaction
+## Step 5: Posting and Updating Transactions
 
-To post a transaction, you'll need to prepare the transaction data and call the `postTransaction` method.
+Add functions to post a new transaction and then update it.
 
 ```typescript
 // Post a new transaction
-async function postNewTransaction() {
-  try {
-    const transactionData = {
-      operation: "CREATE",
-      amount: 10,
-      signerPublicKey: keys.publicKey,
-      signerPrivateKey: keys.privateKey,
-      recipientPublicKey: 'recipient_public_key_here', // Replace with a valid recipient public key
-      asset: { data: "This is transaction data" }
-    };
-
-    const newTransaction = await dbClient.postTransaction(transactionData);
-    console.log('New Transaction:', newTransaction);
-  } catch (error) {
-    console.error('Error posting new transaction:', error);
-  }
+async function createTransaction() {
+  const transactionData = {
+    operation: "CREATE",
+    amount: 100,
+    signerPublicKey: publicKey,
+    signerPrivateKey: privateKey,
+    recipientPublicKey: publicKey, // For the sake of example, sending to self
+    asset: { message: "Initial transaction" }
+  };
+  
+  const transaction = await resilientDBClient.postTransaction(transactionData);
+  console.log('Transaction posted:', transaction);
+  
+  return transaction.id; // We'll need the transaction ID to update it next
 }
 
-postNewTransaction();
+// Update the created transaction
+async function updateTransaction(transactionId: string) {
+  const updateData = {
+    id: transactionId,
+    amount: 150, // Updated amount
+    signerPublicKey: publicKey,
+    signerPrivateKey: privateKey,
+    recipientPublicKey: publicKey, // Still sending to self
+    asset: { message: "Updated transaction data" }
+  };
+  
+  const updatedTransaction = await resilientDBClient.updateTransaction(updateData);
+  console.log('Transaction updated:', updatedTransaction);
+}
+
+async function runDemo() {
+  const transactionId = await createTransaction();
+  await updateTransaction(transactionId);
+}
+
+runDemo();
 ```
 
-### Step 6: Running the Project
+## Step 6: Running the Project
 
-Finally, you can run your project using `ts-node` to execute the TypeScript file.
+You can now run the project from the terminal:
 
 ```sh
 npx ts-node index.ts
 ```
-
 ## Real-World Value and Implications
 
 By simplifying the integration and interaction with the ResilientDB server, the SDK opens the door to a plethora of applications. Whether you're developing a finance app that requires ledger capabilities or seeking the immutability of blockchain for asset tracking, the ResilientDB TypeScript SDK is a capable starting point.
