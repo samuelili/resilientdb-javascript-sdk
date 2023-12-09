@@ -6,6 +6,7 @@ In this in-depth look, we will explore the ResilientDB TypeScript SDK, an essent
 
 ## Table of Contents
 - [**What Is ResilientDB?**](#what-is-resilientdb)
+- [**Prerequisites**](#prerequisites)
 - [**Installation**](#installation)
 - [**SDK**](#introducing-the-sdk)
 - [**Clients**](#clients)
@@ -23,6 +24,21 @@ ResilientDB is a distributed ledger infrastructure that emphasizes resilience, s
 ## NPM Package: `resilientdb-javascript-sdk`
 
 Before diving deep into the codebase, let's address how to get the SDK into your project. The `resilientdb-javascript-sdk` is readily available on the NPM registry and can be included in your project with ease.
+
+## Prerequisites
+
+### Setup Node v18
+Ensure you have Node v18 installed
+```sh
+>> node --version
+v18.17.0
+```
+
+### Setup ResilientDB-GraphQL (Run Locally)
+If you would like to use your own ResilientDB replica set, you must run the ResilientDB stack along with ResilientDB-GraphQL.
+Instructions can be found [here](https://blog.resilientdb.com/2023/09/21/ResVault.html)
+Otherwise, point the client to `https://cloud.resilientdb.com`.
+
 
 ### Installation
 
