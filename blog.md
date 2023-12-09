@@ -4,6 +4,18 @@ The digital era demands robust solutions that can handle data with precision, se
 
 In this depth look, we will explore the ResilientDB TypeScript SDK, an essential toolkit for developers seeking to leverage the ResilientDB platform in their JavaScript and TypeScript applications. Through the integration of GraphQL, the SDK simplifies interactions with the ResilientDB server, enabling easy queries and mutations to manage transactions effectively.
 
+## Table of Contents
+- [**What Is ResilientDB?**](#what-is-resilientdb)
+- [**Installation**](#installation)
+- [**SDK**](#introducing-the-sdk)
+- [**Clients**](#clients)
+- [**ResilientDB Client Methods**](#resilientdb-client-methods)
+- [**Types**](#types)
+- [**SDK Demo Application**](#sdk-demo-application)
+- [**Use the SDK in 6 easy steps**](#use-the-sdk-in-6-easy-steps)
+- [**Real-World Value and Implications**](#real-world-value-and-implications)
+- [**Conclusion**](#conclusion)
+
 ## What Is ResilientDB?
 
 ResilientDB is a distributed ledger infrastructure that emphasizes resilience, scalability, and decentralized control. It allows applications to perform transactions in a distributed environment with trust and transparency being paramount.
@@ -188,7 +200,7 @@ Included within the SDK repository is a demo React application that showcases th
 
 ## Use the SDK in 6 easy steps
 
-## Step 1: Project Setup and SDK Installation
+### Step 1: Project Setup and SDK Installation
 
 Set up a new TypeScript project and install the `resilientdb-javascript-sdk` package as well as TypeScript and the necessary types for Node.js.
 
@@ -213,7 +225,7 @@ Create `tsconfig.json`:
 }
 ```
 
-## Step 2: Generating Keys
+### Step 2: Generating Keys
 
 In the `index.ts` file:
 
@@ -227,7 +239,7 @@ console.log(`Public Key: ${publicKey}`);
 console.log(`Private Key: ${privateKey}`);
 ```
 
-## Step 3: Initializing the Client
+### Step 3: Initializing the Client
 
 Continue editing the `index.ts` to initialize the client:
 
@@ -238,7 +250,7 @@ import { ResilientDB, FetchClient } from 'resilientdb-javascript-sdk';
 const resilientDBClient = new ResilientDB("https://cloud.resilientdb.com", new FetchClient());
 ```
 
-## Step 4: Fetching and Filtering Transactions
+### Step 4: Fetching and Filtering Transactions
 
 Add functions to fetch all transactions and filter based on certain criteria.
 
@@ -263,7 +275,7 @@ getAllTransactions();
 getFilteredTransactions();
 ```
 
-## Step 5: Posting and Updating Transactions
+### Step 5: Posting and Updating Transactions
 
 Add functions to post a new transaction and then update it.
 
@@ -308,7 +320,7 @@ async function runDemo() {
 runDemo();
 ```
 
-## Step 6: Running the Project
+### Step 6: Running the Project
 
 You can now run the project from the terminal:
 
