@@ -72,7 +72,7 @@ Here's a detailed look at each method provided by the `ResilientDB` client.
 | `getAllTransactions`         | -                                           | `Promise<RetrieveTransaction[]>`              | Fetches all transactions.                                           |
 | `getFilteredTransactions`    | `filter?: FilterKeys`                       | `Promise<RetrieveTransaction[]>`              | Retrieves transactions that match the given filtering criteria.     |
 
-- **FilterKeys**: A type that includes optional fields for filtering transactions by `ownerPublicKey` and `recipientPublicKey`.
+- [**FilterKeys**](#filterkeys): A type that includes optional fields for filtering transactions by `ownerPublicKey` and `recipientPublicKey`.
 
 ### Transaction Mutation Methods
 
@@ -82,9 +82,9 @@ Here's a detailed look at each method provided by the `ResilientDB` client.
 | `updateTransaction`          | `transaction: UpdateAsset`                  | `Promise<RetrieveTransaction>`                | Updates an existing transaction.                                    |
 | `updateMultipleTransaction`  | `transactions: UpdateAsset[]`               | `Promise<RetrieveTransaction[]>`              | Updates multiple transactions at once.                              |
 
-- **PrepareAsset**: A type representing the necessary information to prepare a transaction for posting.
-- **UpdateAsset**: A type used for detailing the specifications required to update a transaction.
-- **CommitTransaction**: Represents the output of posting a new transaction, which includes, at minimum, the `id` of the committed transaction.
+- [**PrepareAsset**](#prepareasset): A type representing the necessary information to prepare a transaction for posting.
+- [**UpdateAsset**](#updateasset): A type used for detailing the specifications required to update a transaction.
+- [**CommitTransaction**](#committransaction): Represents the output of posting a new transaction, which includes, at minimum, the `id` of the committed transaction.
 
 ### Key Generation Method
 
@@ -92,6 +92,95 @@ Here's a detailed look at each method provided by the `ResilientDB` client.
 |-----------------------------|---------------------------------------------|-------------------------------------------|--------------------------------------------------------------------|
 | `static generateKeys()`     | -                                           | `{ publicKey: string; privateKey: string}`| Generates a pair of public and private keys for signing transactions.|
 
+## Types
+
+### `NetworkClient`
+
+```typescript
+export interface NetworkClient {
+  request<TReturn extends object>(options: {
+    url: string,
+    headers?: Record<string, string>
+  } & (
+      | {
+        method: 'GET',
+      }
+      | {
+        method: 'POST',
+        body: string | object
+      }
+    )): Promise<TReturn>
+}
+```
+
+### `RetrieveTransaction`
+
+```typescript
+type RetrieveTransaction = {
+  id: string;
+  version: string;
+  amount: number; // integer
+  uri: string;
+  type: string;
+  publicKey: string;
+  operation: string;
+  metadata?: string | null;
+  asset: string;
+}
+```
+
+### `CommitTransaction`
+
+```typescript
+type CommitTransaction = {
+  id: string;
+}
+```
+
+### `PrepareAsset`
+
+```typescript
+type PrepareAsset = {
+  operation: "CREATE" | string;
+  amount: number;
+  signerPublicKey: string;
+  signerPrivateKey: string;
+  recipientPublicKey: string;
+  asset: object;
+}
+```
+
+### `UpdateAsset`
+
+```typescript
+type UpdateAsset = {
+  id: string;
+  operation?: string | null;
+  amount?: number | null; // int
+  signerPublicKey: string;
+  signerPrivateKey: string;
+  recipientPublicKey?: string | null;
+  asset?: string | null;
+}
+```
+
+### `FilterKeys`
+
+```typescript
+type FilterKeys = {
+  ownerPublicKey?: string | null;
+  recipientPublicKey?: string | null;
+}
+```
+
+### `Keys`
+
+```typescript
+type Keys = {
+  publicKey: string
+  privateKey: string
+}
+```
 
 ## SDK Demo Application
 
